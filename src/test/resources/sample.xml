@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss xmlns:blogChannel="http://backend.userland.com/blogChannelModule" version="2.0">
+    <channel>
+        <title>Yahoo!ニュース・トピックス - トップ</title>
+        <link>http://news.yahoo.co.jp/</link>
+        <description>Yahoo! JAPANのニュース・トピックスで取り上げている最新の見出しを提供しています。</description>
+        <language>ja</language>
+        <pubDate>Fri, 29 Apr 2016 20:03:04 +0900</pubDate>
+        <item>
+            <title>熊本地震 活断層に割れ残り?</title>
+            <link>http://news.yahoo.co.jp/pickup/6199473</link>
+            <pubDate>Fri, 29 Apr 2016 16:43:21 +0900</pubDate>
+            <enclosure length="133" url="http://i.yimg.jp/images/icon/photo.gif" type="image/gif">
+            </enclosure>
+            <guid isPermaLink="false">yahoo/news/topics/6199473</guid>
+        </item>
+        <item>
+            <title>広島で突風か 6人重軽傷</title>
+            <link>http://news.yahoo.co.jp/pickup/6199501</link>
+            <pubDate>Fri, 29 Apr 2016 19:49:50 +0900</pubDate>
+            <enclosure length="133" url="http://i.yimg.jp/images/icon/photo.gif" type="image/gif">
+            </enclosure>
+            <guid isPermaLink="false">yahoo/news/topics/6199501</guid>
+        </item>
+        <item>
+            <title>北海道積雪 30日にかけ大荒れ</title>
+            <link>http://news.yahoo.co.jp/pickup/6199493</link>
+            <pubDate>Fri, 29 Apr 2016 18:41:51 +0900</pubDate>
+            <enclosure length="133" url="http://i.yimg.jp/images/icon/photo.gif" type="image/gif">
+            </enclosure>
+            <guid isPermaLink="false">yahoo/news/topics/6199493</guid>
+        </item>
+        <item>
+            <title>橋桁落下 交通規制で商店悲鳴</title>
+            <link>http://news.yahoo.co.jp/pickup/6199489</link>
+            <pubDate>Fri, 29 Apr 2016 19:17:30 +0900</pubDate>
+            <enclosure length="133" url="http://i.yimg.jp/images/icon/photo.gif" type="image/gif">
+            </enclosure>
+            <guid isPermaLink="false">yahoo/news/topics/6199489</guid>
+        </item>
+        <item>
+            <title>機体に「くまモン」JAL応援便</title>
+            <link>http://news.yahoo.co.jp/pickup/6199497</link>
+            <pubDate>Fri, 29 Apr 2016 20:00:59 +0900</pubDate>
+            <enclosure length="133" url="http://i.yimg.jp/images/icon/photo.gif" type="image/gif">
+            </enclosure>
+            <guid isPermaLink="false">yahoo/news/topics/6199497</guid>
+        </item>
+        <item>
+            <title>重機で乱闘 中国騒動のてん末</title>
+            <link>http://news.yahoo.co.jp/pickup/6199488</link>
+            <pubDate>Fri, 29 Apr 2016 19:17:30 +0900</pubDate>
+            <guid isPermaLink="false">yahoo/news/topics/6199488</guid>
+        </item>
+        <item>
+            <title>超会議に草刈降臨 ファン悲鳴</title>
+            <link>http://news.yahoo.co.jp/pickup/6199478</link>
+            <pubDate>Fri, 29 Apr 2016 15:57:20 +0900</pubDate>
+            <enclosure length="133" url="http://i.yimg.jp/images/icon/photo.gif" type="image/gif">
+            </enclosure>
+            <guid isPermaLink="false">yahoo/news/topics/6199478</guid>
+        </item>
+        <item>
+            <title>続編決定 広瀬すず泣き崩れる</title>
+            <link>http://news.yahoo.co.jp/pickup/6199496</link>
+            <pubDate>Fri, 29 Apr 2016 18:45:55 +0900</pubDate>
+            <enclosure length="133" url="http://i.yimg.jp/images/icon/photo.gif" type="image/gif">
+            </enclosure>
+            <guid isPermaLink="false">yahoo/news/topics/6199496</guid>
+        </item>
+    </channel>
+</rss>

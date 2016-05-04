@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version='2.0'>
+    <channel>
+        <title>rss title</title>
+        <link>http://rss.com</link>
+        <description>welcome to rss</description>
+        <item>
+            <title>title1</title>
+            <link>http://link1.co.jp</link>
+            <description>I like a description.</description>
+            <pubDate>Wed, 11 Jun 2008 15:30:59 +0900</pubDate>
+        </item>
+        <item>
+            <title>title2</title>
+            <link>http://link2.co.jp</link>
+            <description>Do you know the description?</description>
+            <pubDate>Tue, 10 Jun 2008 15:30:59 +0900</pubDate>
+        </item>
+        <item>
+            <title>title3</title>
+            <link>http://link3.co.jp</link>
+            <description>Why did you write such a long desctiption?</description>
+            <pubDate>Mon, 9 Jun 2008 20:50:30 +0900</pubDate>
+        </item>
+    </channel>
+</rss>
