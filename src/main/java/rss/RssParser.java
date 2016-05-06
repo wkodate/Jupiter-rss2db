@@ -5,11 +5,13 @@ import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
+import opengraph.OpenGraph;
 import rss.Item;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,15 +62,29 @@ public class RssParser {
         if (date == null) {
             date = syndEntry.getUpdatedDate();
         }
-        // TODO: OpenGraph parserの追加
+        String image = parseImage(syndEntry.getLink());
         return new Item(
                 syndEntry.getTitle(),
                 syndEntry.getLink(),
                 syndEntry.getDescription().getValue(),
                 date,
-                "",
+                image,
                 rssUrl
         );
+    }
+
+    private String parseImage(final String link) {
+        try {
+            OpenGraph og = new OpenGraph(link, true);
+            String image = og.getContent("image");
+            if (image == null) {
+                return "";
+            }
+            return image;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

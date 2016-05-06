@@ -16,11 +16,5 @@
             <description>Do you know the description?</description>
             <pubDate>Tue, 10 Jun 2008 15:30:59 +0900</pubDate>
         </item>
-        <item>
-            <title>title3</title>
-            <link>http://link3.co.jp</link>
-            <description>Why did you write such a long desctiption?</description>
-            <pubDate>Mon, 9 Jun 2008 20:50:30 +0900</pubDate>
-        </item>
     </channel>
 </rss>

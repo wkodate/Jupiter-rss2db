@@ -19,7 +19,7 @@ public class RssParserTest {
 
     @Test
     public final void rss10Test() throws Exception {
-        URL url = getClass().getResource("rss10.xml");
+        URL url = getClass().getResource("/rss10.xml");
         RssParser parser = new RssParser(url);
         List<Item> actual = parser.parse();
 
@@ -33,7 +33,7 @@ public class RssParserTest {
 
     @Test
     public final void rss20Test() throws Exception {
-        URL url = getClass().getResource("rss20.xml");
+        URL url = getClass().getResource("/rss20.xml");
         RssParser parser = new RssParser(url);
         List<Item> actual = parser.parse();
 
@@ -47,7 +47,7 @@ public class RssParserTest {
 
     @Test
     public final void atomTest() throws Exception {
-        URL url = getClass().getResource("atom.xml");
+        URL url = getClass().getResource("/atom.xml");
         RssParser parser = new RssParser(url);
         List<Item> actual = parser.parse();
 
