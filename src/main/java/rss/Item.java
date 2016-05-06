@@ -1,7 +1,9 @@
+package rss;
+
 import java.util.Date;
 
 /**
- * Created by wkodate on 2016/05/02.
+ * parseしたentryを格納するクラス.
  */
 public class Item {
 
@@ -26,7 +28,6 @@ public class Item {
         this.date = date;
         this.image = image;
         this.rssUrl = rssUrl;
-
     }
 
     public String getTitle() {
@@ -52,4 +53,5 @@ public class Item {
     public String getRssUrl() {
         return rssUrl;
     }
+
 }

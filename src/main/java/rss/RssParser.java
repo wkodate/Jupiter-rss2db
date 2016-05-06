@@ -1,8 +1,11 @@
+package rss;
+
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
+import rss.Item;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

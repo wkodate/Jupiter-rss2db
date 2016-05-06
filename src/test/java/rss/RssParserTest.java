@@ -1,4 +1,8 @@
+package rss;
+
 import org.junit.Test;
+import rss.Item;
+import rss.RssParser;
 
 import java.net.URL;
 import java.util.List;
@@ -25,7 +29,6 @@ public class RssParserTest {
         assertThat(actual.get(0).getDate().toString(), is("Wed May 04 16:00:02 JST 2016"));
         assertThat(actual.get(0).getImage(), is(""));
         assertThat(actual.get(0).getRssUrl(), is("http://www.site.com"));
-
     }
 
     @Test

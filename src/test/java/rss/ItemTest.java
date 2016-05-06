@@ -1,5 +1,8 @@
+package rss;
+
 import org.junit.Before;
 import org.junit.Test;
+import rss.Item;
 
 import java.util.Date;
 
