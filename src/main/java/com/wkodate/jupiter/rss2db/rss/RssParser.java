@@ -21,9 +21,11 @@ import java.util.List;
  */
 public class RssParser {
 
+    private final int id;
     private final URL url;
 
-    public RssParser(final URL url) throws MalformedURLException {
+    public RssParser(final int id, final URL url) throws MalformedURLException {
+        this.id = id;
         this.url = url;
     }
 
@@ -37,11 +39,10 @@ public class RssParser {
     public final List<Item> parse() throws IOException, FeedException {
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feed = input.build(new XmlReader(url));
-        String rssUrl = feed.getLink();
 
         List<Item> items = new ArrayList<>();
         for (Object obj : feed.getEntries()) {
-            Item item = parseEntry((SyndEntry) obj, rssUrl);
+            Item item = parseEntry((SyndEntry) obj, id);
             items.add(item);
         }
         return items;
@@ -51,10 +52,10 @@ public class RssParser {
      * entry毎のparse処理.
      *
      * @param syndEntry SyndEntry
-     * @param rssUrl    RSSのURL
+     * @param rssId     RSSのID
      * @return parse結果を格納したItemオブジェクト.
      */
-    private Item parseEntry(final SyndEntry syndEntry, final String rssUrl) {
+    private Item parseEntry(final SyndEntry syndEntry, final int rssId) {
         Date date = syndEntry.getPublishedDate();
         // Atomの場合はupdatedが必須なのでそちらを利用
         if (date == null) {
@@ -67,7 +68,7 @@ public class RssParser {
                 syndEntry.getDescription().getValue(),
                 date,
                 image,
-                rssUrl
+                rssId
         );
     }
 

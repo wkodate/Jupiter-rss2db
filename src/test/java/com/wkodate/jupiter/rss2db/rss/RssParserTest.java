@@ -17,8 +17,9 @@ public class RssParserTest {
 
     @Test
     public final void rss10Test() throws Exception {
+        final int ID = 1;
         URL url = getClass().getResource("/rss10.xml");
-        RssParser parser = new RssParser(url);
+        RssParser parser = new RssParser(ID, url);
         List<Item> actual = parser.parse();
 
         assertThat(actual.get(0).getTitle(), is("title1"));
@@ -26,13 +27,14 @@ public class RssParserTest {
         assertThat(actual.get(0).getDescription(), is("This is a first description."));
         assertThat(actual.get(0).getDate().toString(), is("Wed May 04 16:00:02 JST 2016"));
         assertThat(actual.get(0).getImage(), is(""));
-        assertThat(actual.get(0).getRssUrl(), is("http://www.site.com"));
+        assertThat(actual.get(0).getRssId(), is(ID));
     }
 
     @Test
     public final void rss20Test() throws Exception {
+        final int ID = 2;
         URL url = getClass().getResource("/rss20.xml");
-        RssParser parser = new RssParser(url);
+        RssParser parser = new RssParser(ID, url);
         List<Item> actual = parser.parse();
 
         assertThat(actual.get(0).getTitle(), is("title1"));
@@ -40,13 +42,14 @@ public class RssParserTest {
         assertThat(actual.get(0).getDescription(), is("I like a description."));
         assertThat(actual.get(0).getDate().toString(), is("Wed Jun 11 15:30:59 JST 2008"));
         assertThat(actual.get(0).getImage(), is(""));
-        assertThat(actual.get(0).getRssUrl(), is("http://rss.com"));
+        assertThat(actual.get(0).getRssId(), is(ID));
     }
 
     @Test
     public final void atomTest() throws Exception {
+        final int ID = 3;
         URL url = getClass().getResource("/atom.xml");
-        RssParser parser = new RssParser(url);
+        RssParser parser = new RssParser(ID, url);
         List<Item> actual = parser.parse();
 
         assertThat(actual.get(0).getTitle(), is("sugoi taitoru"));
@@ -54,6 +57,6 @@ public class RssParserTest {
         assertThat(actual.get(0).getDescription(), is("youyaku"));
         assertThat(actual.get(0).getDate().toString(), is("Tue Jan 01 00:00:00 JST 2002013"));
         assertThat(actual.get(0).getImage(), is(""));
-        assertThat(actual.get(0).getRssUrl(), is("http://yafoo.co.jp/feed/"));
+        assertThat(actual.get(0).getRssId(), is(ID));
     }
 }

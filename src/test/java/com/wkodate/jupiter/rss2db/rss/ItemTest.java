@@ -18,13 +18,13 @@ public class ItemTest {
     public static final String DESCRIPTION = "description";
     public static final Date DATE = new Date();
     public static final String IMAGE = "image";
-    public static final String RSS_URL = "rss_url";
+    public static final int RSS_ID = 2;
 
     private Item item;
 
     @Before
     public void setUp() throws Exception {
-        item = new Item(TITLE, LINK, DESCRIPTION, DATE, IMAGE, RSS_URL);
+        item = new Item(TITLE, LINK, DESCRIPTION, DATE, IMAGE, RSS_ID);
     }
 
     @Test
@@ -54,6 +54,6 @@ public class ItemTest {
 
     @Test
     public void testGetRssUrl() throws Exception {
-        assertThat(item.getRssUrl(), is(RSS_URL));
+        assertThat(item.getRssId(), is(RSS_ID));
     }
 }
