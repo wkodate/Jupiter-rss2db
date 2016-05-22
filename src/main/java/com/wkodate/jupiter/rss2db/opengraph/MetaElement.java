@@ -1,4 +1,4 @@
-package opengraph;
+package com.wkodate.jupiter.rss2db.opengraph;
 
 import java.net.URL;
 

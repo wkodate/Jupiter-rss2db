@@ -1,8 +1,6 @@
-package rss;
+package com.wkodate.jupiter.rss2db.rss;
 
 import org.junit.Test;
-import rss.Item;
-import rss.RssParser;
 
 import java.net.URL;
 import java.util.List;

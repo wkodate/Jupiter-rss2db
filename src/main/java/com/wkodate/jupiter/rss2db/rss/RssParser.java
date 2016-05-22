@@ -1,17 +1,15 @@
-package rss;
+package com.wkodate.jupiter.rss2db.rss;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
-import opengraph.OpenGraph;
-import rss.Item;
+import com.wkodate.jupiter.rss2db.opengraph.OpenGraph;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
