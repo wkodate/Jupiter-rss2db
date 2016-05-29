@@ -29,6 +29,11 @@ public class ConfigurationTest {
     }
 
     @Test
+    public void testGetDbName() throws Exception {
+        assertThat(conf.getDbName(), is("name"));
+    }
+
+    @Test
     public void testGetDbUser() throws Exception {
         assertThat(conf.getDbUser(), is("user"));
     }

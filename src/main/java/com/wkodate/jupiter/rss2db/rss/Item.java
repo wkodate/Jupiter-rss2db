@@ -13,6 +13,8 @@ public class Item {
     private final Date date;
     private final String image;
     private final int rssId;
+    private final Date createdAt;
+    private final Date updatedAt;
 
     public Item(
             final String title,
@@ -20,7 +22,9 @@ public class Item {
             final String description,
             final Date date,
             final String image,
-            final int rssId
+            final int rssId,
+            final Date createdAt,
+            final Date updatedAt
     ) {
         this.title = title;
         this.link = link;
@@ -28,6 +32,8 @@ public class Item {
         this.date = date;
         this.image = image;
         this.rssId = rssId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getTitle() {
@@ -52,6 +58,14 @@ public class Item {
 
     public int getRssId() {
         return rssId;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
 }

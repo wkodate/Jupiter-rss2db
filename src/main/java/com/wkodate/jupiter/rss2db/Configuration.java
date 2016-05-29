@@ -10,6 +10,7 @@ import java.util.Properties;
 public class Configuration {
 
     private static final String DBHOST_KEY = "dbhost";
+    private static final String DBNAME_KEY = "dbname";
     private static final String DBUSER_KEY = "dbuser";
     private static final String DBPASSWORD_KEY = "dbpassword";
 
@@ -25,6 +26,10 @@ public class Configuration {
 
     public final String getDbHost() {
         return prop.getProperty(DBHOST_KEY);
+    }
+
+    public final String getDbName() {
+        return prop.getProperty(DBNAME_KEY);
     }
 
     public final String getDbUser() {

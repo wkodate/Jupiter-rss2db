@@ -68,7 +68,9 @@ public class RssParser {
                 syndEntry.getDescription().getValue(),
                 date,
                 image,
-                rssId
+                rssId,
+                new Date(),
+                new Date()
         );
     }
 

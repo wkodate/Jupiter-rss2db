@@ -24,7 +24,7 @@ public class ItemTest {
 
     @Before
     public void setUp() throws Exception {
-        item = new Item(TITLE, LINK, DESCRIPTION, DATE, IMAGE, RSS_ID);
+        item = new Item(TITLE, LINK, DESCRIPTION, DATE, IMAGE, RSS_ID, DATE, DATE);
     }
 
     @Test
@@ -55,5 +55,15 @@ public class ItemTest {
     @Test
     public void testGetRssUrl() throws Exception {
         assertThat(item.getRssId(), is(RSS_ID));
+    }
+
+    @Test
+    public void testGetCreatedAt() throws Exception {
+        assertThat(item.getCreatedAt(), is(DATE));
+    }
+
+    @Test
+    public void testGetUpdatedAt() throws Exception {
+        assertThat(item.getUpdatedAt(), is(DATE));
     }
 }
