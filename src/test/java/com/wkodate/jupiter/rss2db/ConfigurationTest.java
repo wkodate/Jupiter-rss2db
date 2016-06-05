@@ -24,6 +24,11 @@ public class ConfigurationTest {
     }
 
     @Test
+    public void testGetDbType() throws Exception {
+        assertThat(conf.getDbType(), is("mysql"));
+    }
+
+    @Test
     public void testGetDbHost() throws Exception {
         assertThat(conf.getDbHost(), is("host"));
     }

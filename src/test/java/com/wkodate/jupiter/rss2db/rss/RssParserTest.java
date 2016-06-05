@@ -1,5 +1,6 @@
 package com.wkodate.jupiter.rss2db.rss;
 
+import com.sun.syndication.feed.synd.SyndEntry;
 import org.junit.Test;
 
 import java.net.URL;
@@ -20,14 +21,15 @@ public class RssParserTest {
         final int ID = 1;
         URL url = getClass().getResource("/rss10.xml");
         RssParser parser = new RssParser(ID, url);
-        List<Item> actual = parser.parse();
+        List<SyndEntry> list = parser.getEntries();
+        Item actual = parser.parse(list.get(0));
 
-        assertThat(actual.get(0).getTitle(), is("title1"));
-        assertThat(actual.get(0).getLink(), is("http://www.url1.com"));
-        assertThat(actual.get(0).getDescription(), is("This is a first description."));
-        assertThat(actual.get(0).getDate().toString(), is("Wed May 04 16:00:02 JST 2016"));
-        assertThat(actual.get(0).getImage(), is(""));
-        assertThat(actual.get(0).getRssId(), is(ID));
+        assertThat(actual.getTitle(), is("title1"));
+        assertThat(actual.getLink(), is("http://www.url1.com"));
+        assertThat(actual.getDescription(), is("This is a first description."));
+        assertThat(actual.getDate().toString(), is("Wed May 04 16:00:02 JST 2016"));
+        assertThat(actual.getImage(), is(""));
+        assertThat(actual.getRssId(), is(ID));
     }
 
     @Test
@@ -35,14 +37,15 @@ public class RssParserTest {
         final int ID = 2;
         URL url = getClass().getResource("/rss20.xml");
         RssParser parser = new RssParser(ID, url);
-        List<Item> actual = parser.parse();
+        List<SyndEntry> list = parser.getEntries();
+        Item actual = parser.parse(list.get(0));
 
-        assertThat(actual.get(0).getTitle(), is("title1"));
-        assertThat(actual.get(0).getLink(), is("http://link1.co.jp"));
-        assertThat(actual.get(0).getDescription(), is("I like a description."));
-        assertThat(actual.get(0).getDate().toString(), is("Wed Jun 11 15:30:59 JST 2008"));
-        assertThat(actual.get(0).getImage(), is(""));
-        assertThat(actual.get(0).getRssId(), is(ID));
+        assertThat(actual.getTitle(), is("title1"));
+        assertThat(actual.getLink(), is("http://link1.co.jp"));
+        assertThat(actual.getDescription(), is("I like a description."));
+        assertThat(actual.getDate().toString(), is("Wed Jun 11 15:30:59 JST 2008"));
+        assertThat(actual.getImage(), is(""));
+        assertThat(actual.getRssId(), is(ID));
     }
 
     @Test
@@ -50,13 +53,14 @@ public class RssParserTest {
         final int ID = 3;
         URL url = getClass().getResource("/atom.xml");
         RssParser parser = new RssParser(ID, url);
-        List<Item> actual = parser.parse();
+        List<SyndEntry> list = parser.getEntries();
+        Item actual = parser.parse(list.get(0));
 
-        assertThat(actual.get(0).getTitle(), is("sugoi taitoru"));
-        assertThat(actual.get(0).getLink(), is("http://yafoo.co.jp/1"));
-        assertThat(actual.get(0).getDescription(), is("youyaku"));
-        assertThat(actual.get(0).getDate().toString(), is("Tue Jan 01 00:00:00 JST 2002013"));
-        assertThat(actual.get(0).getImage(), is(""));
-        assertThat(actual.get(0).getRssId(), is(ID));
+        assertThat(actual.getTitle(), is("sugoi taitoru"));
+        assertThat(actual.getLink(), is("http://yafoo.co.jp/1"));
+        assertThat(actual.getDescription(), is("youyaku"));
+        assertThat(actual.getDate().toString(), is("Tue Jan 01 00:00:00 JST 2002013"));
+        assertThat(actual.getImage(), is(""));
+        assertThat(actual.getRssId(), is(ID));
     }
 }

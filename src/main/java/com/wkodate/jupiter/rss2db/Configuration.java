@@ -9,6 +9,7 @@ import java.util.Properties;
  */
 public class Configuration {
 
+    private static final String DBTYPE_KEY = "dbtype";
     private static final String DBHOST_KEY = "dbhost";
     private static final String DBNAME_KEY = "dbname";
     private static final String DBUSER_KEY = "dbuser";
@@ -22,6 +23,10 @@ public class Configuration {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public final String getDbType() {
+        return prop.getProperty(DBTYPE_KEY);
     }
 
     public final String getDbHost() {
