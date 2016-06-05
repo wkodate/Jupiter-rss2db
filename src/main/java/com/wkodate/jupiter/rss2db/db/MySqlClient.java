@@ -2,21 +2,17 @@ package com.wkodate.jupiter.rss2db.db;
 
 import com.wkodate.jupiter.rss2db.rss.Item;
 
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
- * MySQL
+ * MySQLクライアント.
  */
 public class MySqlClient extends DbClient {
 
     private MySqlStatementCreator creator;
-
 
     public MySqlClient(String host, String name, String user, String password) throws SQLException {
         super(host, name, user, password);
@@ -35,22 +31,23 @@ public class MySqlClient extends DbClient {
     }
 
     @Override
-    public void close() throws SQLException {
-        conn.close();
+    public ResultSet selectRsses() throws SQLException {
+        Statement statement = conn.createStatement();
+        String sql = creator.createStatementThatSelectRssesTable();
+        return statement.executeQuery(sql);
     }
 
-    public Map<Integer, String> getIdUrlMap() throws SQLException {
-        Map<Integer, String> idUrl = new HashMap<>();
-
+    @Override
+    public boolean itemExists(String url) throws SQLException {
         Statement statement = conn.createStatement();
         String sql = creator.createStatementThatSelectRssesTable();
         ResultSet rs = statement.executeQuery(sql);
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String url = rs.getString("rss_url");
-            idUrl.put(id, url);
-        }
-        return idUrl;
+        return rs.getInt(1) == 1;
+    }
+
+    @Override
+    public void close() throws SQLException {
+        conn.close();
     }
 
 }

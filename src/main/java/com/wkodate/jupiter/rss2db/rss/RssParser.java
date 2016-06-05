@@ -8,9 +8,7 @@ import com.sun.syndication.io.XmlReader;
 import com.wkodate.jupiter.rss2db.opengraph.OpenGraph;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,51 +22,39 @@ public class RssParser {
     private final int id;
     private final URL url;
 
-    public RssParser(final int id, final URL url) throws MalformedURLException {
+    private SyndFeed feed;
+
+    public RssParser(final int id, final URL url) throws IOException, FeedException {
         this.id = id;
         this.url = url;
+        SyndFeedInput input = new SyndFeedInput();
+        this.feed = input.build(new XmlReader(url));
     }
 
-    /**
-     * XMLをparse
-     *
-     * @return parseしたItemのリスト.
-     * @throws IOException
-     * @throws FeedException
-     */
-    public final List<Item> parse() throws IOException, FeedException {
-        SyndFeedInput input = new SyndFeedInput();
-        SyndFeed feed = input.build(new XmlReader(url));
-
-        List<Item> items = new ArrayList<>();
-        for (Object obj : feed.getEntries()) {
-            Item item = parseEntry((SyndEntry) obj, id);
-            items.add(item);
-        }
-        return items;
+    public List<SyndEntry> getEntries() {
+        return feed.getEntries();
     }
 
     /**
      * entry毎のparse処理.
      *
-     * @param syndEntry SyndEntry
-     * @param rssId     RSSのID
-     * @return parse結果を格納したItemオブジェクト.
+     * @param entry SyndEntry
+     * @return parseしたItem.
      */
-    private Item parseEntry(final SyndEntry syndEntry, final int rssId) {
-        Date date = syndEntry.getPublishedDate();
+    public final Item parse(final SyndEntry entry) {
+        Date date = entry.getPublishedDate();
         // Atomの場合はupdatedが必須なのでそちらを利用
         if (date == null) {
-            date = syndEntry.getUpdatedDate();
+            date = entry.getUpdatedDate();
         }
-        String image = parseImage(syndEntry.getLink());
+        String image = parseImage(entry.getLink());
         return new Item(
-                syndEntry.getTitle(),
-                syndEntry.getLink(),
-                syndEntry.getDescription().getValue(),
+                entry.getTitle(),
+                entry.getLink(),
+                entry.getDescription().getValue(),
                 date,
                 image,
-                rssId,
+                id,
                 new Date(),
                 new Date()
         );
