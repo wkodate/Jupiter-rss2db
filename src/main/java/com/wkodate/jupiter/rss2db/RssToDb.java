@@ -3,6 +3,7 @@ package com.wkodate.jupiter.rss2db;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.io.FeedException;
 import com.wkodate.jupiter.rss2db.db.DbClient;
+import com.wkodate.jupiter.rss2db.db.DbClientBuilder;
 import com.wkodate.jupiter.rss2db.db.MySqlClient;
 import com.wkodate.jupiter.rss2db.rss.Item;
 import com.wkodate.jupiter.rss2db.rss.RssParser;
@@ -25,16 +26,13 @@ public class RssToDb {
 
     public RssToDb(final String filename) throws SQLException {
         Configuration conf = new Configuration(filename);
-        if ("mysql".equals(conf.getDbType())) {
-            this.client = new MySqlClient(
-                    conf.getDbHost(),
-                    conf.getDbName(),
-                    conf.getDbUser(),
-                    conf.getDbPassword()
-            );
-        } else {
-            throw new IllegalArgumentException("Unexpected DB type: " + conf.getDbType());
-        }
+        this.client = new DbClient.Builder(
+                conf.getDbType(),
+                conf.getDbHost(),
+                conf.getDbName(),
+                conf.getDbUser(),
+                conf.getDbPassword()
+        ).build();
     }
 
     public final void init() throws SQLException {
@@ -91,7 +89,7 @@ public class RssToDb {
 
     public static void main(final String[] args) {
         if (args.length == 0) {
-            System.out.println("Usage: java -jar spider.jar com.wkodate.jupiter.RssToDb <configuration file path>");
+            System.out.println("Usage: java -cp rss2db.jar com.wkodate.jupiter.rss2db.RssToDb <configuration file path>");
             System.exit(1);
         }
         String filename = args[0];

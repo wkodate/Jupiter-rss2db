@@ -12,10 +12,12 @@ import java.util.List;
  */
 public class MySqlClient extends DbClient {
 
+    private static final String DB_TYPE = "mysql";
+
     private MySqlStatementCreator creator;
 
     public MySqlClient(String host, String name, String user, String password) throws SQLException {
-        super(host, name, user, password);
+        super(DB_TYPE, host, name, user, password);
         creator = new MySqlStatementCreator(name);
     }
 
