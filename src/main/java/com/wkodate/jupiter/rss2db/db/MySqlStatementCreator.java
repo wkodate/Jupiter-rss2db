@@ -21,7 +21,7 @@ public class MySqlStatementCreator {
 
     public final String createStatementThatSelectRssesTable() {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT rss_url, title, site_link, description, created_at, updated_at FROM ");
+        sb.append("SELECT id, rss_url, title, site_link, description, created_at, updated_at FROM ");
         sb.append(dbname);
         sb.append(".rsses;");
         return sb.toString();

@@ -3,8 +3,6 @@ package com.wkodate.jupiter.rss2db;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.io.FeedException;
 import com.wkodate.jupiter.rss2db.db.DbClient;
-import com.wkodate.jupiter.rss2db.db.DbClientBuilder;
-import com.wkodate.jupiter.rss2db.db.MySqlClient;
 import com.wkodate.jupiter.rss2db.rss.Item;
 import com.wkodate.jupiter.rss2db.rss.RssParser;
 
@@ -55,13 +53,14 @@ public class RssToDb {
                         continue;
                     }
                     items.add(parser.parse(entry));
+                    Thread.sleep(1000L);
                 }
                 // to mysql
                 if (items.size() == 0) {
                     continue;
                 }
                 client.insert(items);
-            } catch (FeedException | IOException | SQLException e) {
+            } catch (FeedException | IOException | SQLException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -69,8 +68,7 @@ public class RssToDb {
 
     private Map<Integer, String> getRssIdUrlMap() {
         Map<Integer, String> idUrl = new HashMap<>();
-        try {
-            ResultSet rs = client.selectRsses();
+        try (ResultSet rs = client.selectRsses()) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String url = rs.getString("rss_url");
