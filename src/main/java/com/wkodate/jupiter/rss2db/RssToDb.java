@@ -82,12 +82,14 @@ public class RssToDb {
                 e.printStackTrace();
             }
         }
-        if (newItems.size() > 0) {
-            client.insert(newItems);
+        if (newItems.size() == 0) {
+            LOG.info("No items are updated.");
+            return;
         }
+        client.insert(newItems);
+        LOG.info(newItems.size() + " items are updated.");
         // post tweets
         postTweets(newItems);
-        LOG.info(newItems.size() + " items are updated.");
     }
 
     private Map<Integer, String> getRssIdUrlMap() {
@@ -107,10 +109,11 @@ public class RssToDb {
     private void postTweets(final List<Item> items) {
         try {
             for (Item item : items) {
-                twitter.post(item.getTitle(), item.getLink());
+                // id取得
+                int id = client.selectItemId(item.getLink());
+                twitter.post(item.getTitle(), String.valueOf(id));
             }
-        } catch (TwitterException e) {
-            e.printStackTrace();
+        } catch (TwitterException | SQLException e) {
             LOG.error("Unexpected: ", e);
         }
     }

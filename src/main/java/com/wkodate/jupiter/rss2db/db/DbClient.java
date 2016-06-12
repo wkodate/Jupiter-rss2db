@@ -45,6 +45,8 @@ public abstract class DbClient {
 
     public abstract ResultSet selectRsses() throws SQLException;
 
+    public abstract int selectItemId(String url) throws SQLException;
+
     public abstract boolean itemExists(final String url) throws SQLException;
 
     public abstract void close() throws SQLException;

@@ -13,6 +13,10 @@ public class TwitterBot {
 
     private static final Logger LOG = Logger.getLogger(TwitterBot.class);
 
+    private static final String ITEM_URL = "https://matome-nanj.net/items/";
+
+    private static final String HASH_TAG = "#なんJまとめのまとめ";
+
     private final Twitter twitter;
 
     public TwitterBot(
@@ -31,8 +35,13 @@ public class TwitterBot {
         }
     }
 
-    public void post(final String title, final String url) throws TwitterException {
-        twitter.updateStatus(title + "\n" + url);
+    public void post(final String title, final String id) throws TwitterException {
+        twitter.updateStatus(createText(title, id));
+    }
+
+    private String createText(final String title, final String id) {
+        final String url = ITEM_URL + id;
+        return title + " " + HASH_TAG + "\n" + url;
     }
 
 }

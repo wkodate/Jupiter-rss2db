@@ -58,9 +58,9 @@ public class MySqlStatementCreator {
         return sb.toString();
     }
 
-    public final String createStatementThatSelectLinkFromItemsTable(final String link) {
+    public final String createStatementThatSelectIdFromItemsTable(final String link) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT link FROM items WHERE link='");
+        sb.append("SELECT id FROM items WHERE link='");
         sb.append(link);
         sb.append("';");
         return sb.toString();

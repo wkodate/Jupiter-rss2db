@@ -2,6 +2,7 @@ package com.wkodate.jupiter.rss2db.db;
 
 import com.wkodate.jupiter.rss2db.rss.Item;
 
+import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -30,6 +31,7 @@ public class MySqlClient extends DbClient {
         Statement statement = conn.createStatement();
         String sql = creator.createStatementThatInsertIntoItemsTable(items);
         statement.executeUpdate(sql);
+        // TODO statementのclose
     }
 
     @Override
@@ -40,12 +42,23 @@ public class MySqlClient extends DbClient {
     }
 
     @Override
+    public int selectItemId(String url) throws SQLException {
+        ResultSet rs = selectId(url);
+        rs.next();
+        return rs.getInt("id");
+    }
+
+    @Override
     public boolean itemExists(String url) throws SQLException {
-        Statement statement = conn.createStatement();
-        String sql = creator.createStatementThatSelectLinkFromItemsTable(url);
-        ResultSet rs = statement.executeQuery(sql);
+        ResultSet rs = selectId(url);
         rs.last();
         return rs.getRow() >= 1;
+    }
+
+    private ResultSet selectId(String url) throws SQLException {
+        Statement statement = conn.createStatement();
+        String sql = creator.createStatementThatSelectIdFromItemsTable(url);
+        return statement.executeQuery(sql);
     }
 
     @Override
