@@ -3,7 +3,9 @@ package com.wkodate.jupiter.rss2db;
 import com.wkodate.jupiter.rss2db.db.DbClient;
 import com.wkodate.jupiter.rss2db.rss.Item;
 import com.wkodate.jupiter.rss2db.rss.RssParserThread;
+import com.wkodate.jupiter.rss2db.sns.TwitterBot;
 import org.apache.log4j.Logger;
+import twitter4j.TwitterException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,7 +25,9 @@ public class RssToDb {
 
     private static final Logger LOG = Logger.getLogger(RssToDb.class);
 
-    private DbClient client;
+    private final DbClient client;
+
+    private final TwitterBot twitter;
 
     private final long fetchIntervalMs;
 
@@ -38,6 +42,12 @@ public class RssToDb {
                 conf.getDbUser(),
                 conf.getDbPassword()
         ).build();
+        this.twitter = new TwitterBot(
+                conf.getTwitterConsumerKey(),
+                conf.getTwitterConsumerSecret(),
+                conf.getTwitterAccessToken(),
+                conf.getTwitterAccessTokenSecret()
+        );
         this.fetchIntervalMs = conf.getFetchIntervalMs();
     }
 
@@ -57,7 +67,7 @@ public class RssToDb {
                     new RssParserThread(rssId, rsses.get(rssId), fetchIntervalMs));
             futures.add(future);
         }
-        List<Item> insertItems = new ArrayList<>();
+        List<Item> newItems = new ArrayList<>();
         for (Future<List<Item>> future : futures) {
             try {
                 List<Item> parsed = future.get();
@@ -66,16 +76,20 @@ public class RssToDb {
                     if (client.itemExists(item.getLink())) {
                         continue;
                     }
-                    insertItems.add(item);
+                    newItems.add(item);
                 }
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
-        if (insertItems.size() > 0) {
-            client.insert(insertItems);
+        if (newItems.size() == 0) {
+            LOG.info("No items are updated.");
+            return;
         }
-        LOG.info(insertItems.size() + " items are updated.");
+        client.insert(newItems);
+        LOG.info(newItems.size() + " items are updated.");
+        // post tweets
+        postTweets(newItems);
     }
 
     private Map<Integer, String> getRssIdUrlMap() {
@@ -90,6 +104,18 @@ public class RssToDb {
             e.printStackTrace();
         }
         return idUrl;
+    }
+
+    private void postTweets(final List<Item> items) {
+        try {
+            for (Item item : items) {
+                // id取得
+                int id = client.selectItemId(item.getLink());
+                twitter.post(item.getTitle(), String.valueOf(id));
+            }
+        } catch (TwitterException | SQLException e) {
+            LOG.error("Unexpected: ", e);
+        }
     }
 
     public final void close() throws SQLException {

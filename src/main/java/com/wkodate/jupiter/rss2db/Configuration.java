@@ -15,11 +15,15 @@ public class Configuration {
     private static final String DBUSER_KEY = "dbuser";
     private static final String DBPASSWORD_KEY = "dbpassword";
     private static final String FETCH_INTERVAL_MS_KEY = "fetch_interval_ms";
+    private static final String TWITTER_CONSUMER_KEY_KEY = "twitter_consumer_key";
+    private static final String TWITTER_CONSUMER_SECRET_KEY = "twitter_consumer_secret";
+    private static final String TWITTER_ACCESS_TOKEN_KEY = "twitter_access_token";
+    private static final String TWITTER_ACCESS_TOKEN_SECRET_KEY = "twitter_access_token_secret";
 
     private Properties prop = new Properties();
 
     public Configuration(final String filename) {
-        try (FileInputStream fi = new FileInputStream(filename)){
+        try (FileInputStream fi = new FileInputStream(filename)) {
             prop.load(fi);
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,6 +52,22 @@ public class Configuration {
 
     public final long getFetchIntervalMs() {
         return Long.parseLong(prop.getProperty(FETCH_INTERVAL_MS_KEY));
+    }
+
+    public final String getTwitterConsumerKey() {
+        return prop.getProperty(TWITTER_CONSUMER_KEY_KEY);
+    }
+
+    public final String getTwitterConsumerSecret() {
+        return prop.getProperty(TWITTER_CONSUMER_SECRET_KEY);
+    }
+
+    public final String getTwitterAccessToken() {
+        return prop.getProperty(TWITTER_ACCESS_TOKEN_KEY);
+    }
+
+    public final String getTwitterAccessTokenSecret() {
+        return prop.getProperty(TWITTER_ACCESS_TOKEN_SECRET_KEY);
     }
 
 }

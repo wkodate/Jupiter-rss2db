@@ -53,4 +53,24 @@ public class ConfigurationTest {
         assertThat(conf.getFetchIntervalMs(), is(1000L));
     }
 
+
+    @Test
+    public void testGetTwitterConsumerKey() throws Exception {
+        assertThat(conf.getTwitterConsumerKey(), is("conskey"));
+    }
+
+    @Test
+    public void testGetTwitterConsumerSecret() throws Exception {
+        assertThat(conf.getTwitterConsumerSecret(), is("conssecret"));
+    }
+
+    @Test
+    public void testGetTwitterAccessToken() throws Exception {
+        assertThat(conf.getTwitterAccessToken(), is("accesstoken"));
+    }
+
+    @Test
+    public void testGetTwitterAccessTokenSecret() throws Exception {
+        assertThat(conf.getTwitterAccessTokenSecret(), is("accesstokensecret"));
+    }
 }

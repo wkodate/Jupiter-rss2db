@@ -114,10 +114,10 @@ public class MySqlStatementCreatorTest {
         final String LINK = "http://www.link.com";
         MySqlStatementCreator creator = new MySqlStatementCreator(TEST_DB_NAME);
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT link FROM items WHERE link='");
+        sb.append("SELECT id FROM items WHERE link='");
         sb.append(LINK);
         sb.append("';");
-        assertThat(creator.createStatementThatSelectLinkFromItemsTable(LINK),
+        assertThat(creator.createStatementThatSelectIdFromItemsTable(LINK),
                 is(sb.toString()));
 
     }
