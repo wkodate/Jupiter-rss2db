@@ -21,7 +21,7 @@ public class RssParserThread implements Callable<List<Item>> {
     private final long fetchIntervalMs;
 
 
-    public RssParserThread(final Integer id, final String url, final long interval) {
+    public RssParserThread(final int id, final String url, final long interval) {
         this.rssId = id;
         this.rssUrl = url;
         this.fetchIntervalMs = interval;

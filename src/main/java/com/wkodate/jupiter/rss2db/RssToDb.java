@@ -49,7 +49,7 @@ public class RssToDb {
 
         List<Future<List<Item>>> futures = new ArrayList<>();
         // rssごとに並列でパース
-        for (Integer rssId : rsses.keySet()) {
+        for (int rssId : rsses.keySet()) {
             Future<List<Item>> future = es.submit(
                     new RssParserThread(rssId, rsses.get(rssId), fetchIntervalMs));
             futures.add(future);
