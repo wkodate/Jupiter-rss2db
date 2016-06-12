@@ -1,19 +1,19 @@
 package com.wkodate.jupiter.rss2db;
 
-import com.sun.syndication.feed.synd.SyndEntry;
-import com.sun.syndication.io.FeedException;
 import com.wkodate.jupiter.rss2db.db.DbClient;
 import com.wkodate.jupiter.rss2db.rss.Item;
-import com.wkodate.jupiter.rss2db.rss.RssParser;
+import com.wkodate.jupiter.rss2db.rss.RssParserThread;
 
-import java.io.IOException;
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Rssの情報をDBに格納.
@@ -23,6 +23,8 @@ public class RssToDb {
     private DbClient client;
 
     private final long fetchIntervalMs;
+
+    private ExecutorService es;
 
     public RssToDb(final String filename) throws SQLException {
         Configuration conf = new Configuration(filename);
@@ -37,6 +39,7 @@ public class RssToDb {
     }
 
     public final void init() throws SQLException {
+        es = Executors.newCachedThreadPool();
         client.init();
     }
 
@@ -44,29 +47,32 @@ public class RssToDb {
         // RSSのidとURLのMapを取得
         Map<Integer, String> rsses = getRssIdUrlMap();
 
-        // TODO rss idごとに並列にパース
-        for (Integer id : rsses.keySet()) {
+        List<Future<List<Item>>> futures = new ArrayList<>();
+        // rssごとに並列でパース
+        for (int rssId : rsses.keySet()) {
+            Future<List<Item>> future = es.submit(
+                    new RssParserThread(rssId, rsses.get(rssId), fetchIntervalMs));
+            futures.add(future);
+        }
+        List<Item> insertItems = new ArrayList<>();
+        for (Future<List<Item>> future : futures) {
             try {
-                List<Item> items = new ArrayList<>();
-                // parse
-                RssParser parser = new RssParser(Integer.valueOf(id), new URL(rsses.get(id)));
-                List<SyndEntry> entries = parser.getEntries();
-                for (SyndEntry entry : entries) {
-                    if (client.itemExists(entry.getLink())) {
+                List<Item> parsed = future.get();
+                for (Item item : parsed) {
+                    // 既にdbに存在する場合はスキップ
+                    if (client.itemExists(item.getLink())) {
                         continue;
                     }
-                    items.add(parser.parse(entry));
-                    Thread.sleep(fetchIntervalMs);
+                    insertItems.add(item);
                 }
-                // to mysql
-                if (items.size() == 0) {
-                    continue;
-                }
-                client.insert(items);
-            } catch (FeedException | IOException | SQLException | InterruptedException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
+        if (insertItems.size() > 0) {
+            client.insert(insertItems);
+        }
+        System.out.println(insertItems.size() + " items are updated.");
     }
 
     private Map<Integer, String> getRssIdUrlMap() {
@@ -81,11 +87,11 @@ public class RssToDb {
             e.printStackTrace();
         }
         return idUrl;
-
     }
 
     public final void close() throws SQLException {
         client.close();
+        es.shutdown();
     }
 
     public static void main(final String[] args) {
