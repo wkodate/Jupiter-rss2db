@@ -47,4 +47,10 @@ public class ConfigurationTest {
     public void testGetDbPassword() throws Exception {
         assertThat(conf.getDbPassword(), is("pass"));
     }
+
+    @Test
+    public void testGetFetchIntervalMs() throws Exception {
+        assertThat(conf.getFetchIntervalMs(), is(1000L));
+    }
+
 }

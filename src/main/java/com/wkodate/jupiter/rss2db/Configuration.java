@@ -14,6 +14,7 @@ public class Configuration {
     private static final String DBNAME_KEY = "dbname";
     private static final String DBUSER_KEY = "dbuser";
     private static final String DBPASSWORD_KEY = "dbpassword";
+    private static final String FETCH_INTERVAL_MS_KEY = "fetch_interval_ms";
 
     private Properties prop = new Properties();
 
@@ -43,6 +44,10 @@ public class Configuration {
 
     public final String getDbPassword() {
         return prop.getProperty(DBPASSWORD_KEY);
+    }
+
+    public final long getFetchIntervalMs() {
+        return Long.parseLong(prop.getProperty(FETCH_INTERVAL_MS_KEY));
     }
 
 }

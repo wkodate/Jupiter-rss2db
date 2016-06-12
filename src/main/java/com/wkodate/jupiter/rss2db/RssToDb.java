@@ -22,6 +22,8 @@ public class RssToDb {
 
     private DbClient client;
 
+    private final long fetchIntervalMs;
+
     public RssToDb(final String filename) throws SQLException {
         Configuration conf = new Configuration(filename);
         this.client = new DbClient.Builder(
@@ -31,6 +33,7 @@ public class RssToDb {
                 conf.getDbUser(),
                 conf.getDbPassword()
         ).build();
+        this.fetchIntervalMs = conf.getFetchIntervalMs();
     }
 
     public final void init() throws SQLException {
@@ -53,7 +56,7 @@ public class RssToDb {
                         continue;
                     }
                     items.add(parser.parse(entry));
-                    Thread.sleep(1000L);
+                    Thread.sleep(fetchIntervalMs);
                 }
                 // to mysql
                 if (items.size() == 0) {
