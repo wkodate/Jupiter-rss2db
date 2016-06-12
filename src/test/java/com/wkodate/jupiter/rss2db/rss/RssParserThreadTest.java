@@ -22,4 +22,5 @@ public class RssParserThreadTest {
         List<Item> items = thread.call();
         assertThat(items.size(), is(2));
     }
+
 }

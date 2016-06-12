@@ -3,6 +3,7 @@ package com.wkodate.jupiter.rss2db;
 import com.wkodate.jupiter.rss2db.db.DbClient;
 import com.wkodate.jupiter.rss2db.rss.Item;
 import com.wkodate.jupiter.rss2db.rss.RssParserThread;
+import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,6 +20,8 @@ import java.util.concurrent.Future;
  * Rssの情報をDBに格納.
  */
 public class RssToDb {
+
+    private static final Logger LOG = Logger.getLogger(RssToDb.class);
 
     private DbClient client;
 
@@ -72,7 +75,7 @@ public class RssToDb {
         if (insertItems.size() > 0) {
             client.insert(insertItems);
         }
-        System.out.println(insertItems.size() + " items are updated.");
+        LOG.info(insertItems.size() + " items are updated.");
     }
 
     private Map<Integer, String> getRssIdUrlMap() {
