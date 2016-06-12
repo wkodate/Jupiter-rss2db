@@ -42,9 +42,10 @@ public class MySqlClient extends DbClient {
     @Override
     public boolean itemExists(String url) throws SQLException {
         Statement statement = conn.createStatement();
-        String sql = creator.createStatementThatSelectRssesTable();
+        String sql = creator.createStatementThatSelectLinkFromItemsTable(url);
         ResultSet rs = statement.executeQuery(sql);
-        return rs.getInt(1) == 1;
+        rs.last();
+        return rs.getRow() >= 1;
     }
 
     @Override

@@ -60,9 +60,9 @@ public class MySqlStatementCreator {
 
     public final String createStatementThatSelectLinkFromItemsTable(final String link) {
         StringBuilder sb = new StringBuilder();
-        sb.append("SELECT COUNT(*) FROM items WHERE link=");
+        sb.append("SELECT link FROM items WHERE link='");
         sb.append(link);
-        sb.append(";");
+        sb.append("';");
         return sb.toString();
     }
 
