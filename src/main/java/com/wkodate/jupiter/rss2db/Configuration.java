@@ -19,6 +19,7 @@ public class Configuration {
     private static final String TWITTER_CONSUMER_SECRET_KEY = "twitter_consumer_secret";
     private static final String TWITTER_ACCESS_TOKEN_KEY = "twitter_access_token";
     private static final String TWITTER_ACCESS_TOKEN_SECRET_KEY = "twitter_access_token_secret";
+    private static final String MAX_TWEETS_KEY = "max_tweets";
 
     private Properties prop = new Properties();
 
@@ -68,6 +69,10 @@ public class Configuration {
 
     public final String getTwitterAccessTokenSecret() {
         return prop.getProperty(TWITTER_ACCESS_TOKEN_SECRET_KEY);
+    }
+
+    public final int getMaxTweets() {
+        return Integer.parseInt(prop.getProperty(MAX_TWEETS_KEY));
     }
 
 }
