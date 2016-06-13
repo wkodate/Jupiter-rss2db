@@ -31,6 +31,8 @@ public class RssToDb {
 
     private final long fetchIntervalMs;
 
+    private final int maxTweets;
+
     private ExecutorService es;
 
     public RssToDb(final String filename) throws SQLException {
@@ -49,6 +51,7 @@ public class RssToDb {
                 conf.getTwitterAccessTokenSecret()
         );
         this.fetchIntervalMs = conf.getFetchIntervalMs();
+        this.maxTweets = conf.getMaxTweets();
     }
 
     public final void init() throws SQLException {
@@ -107,11 +110,16 @@ public class RssToDb {
     }
 
     private void postTweets(final List<Item> items) {
+        int currentTweets = 0;
         try {
             for (Item item : items) {
                 // id取得
                 int id = client.selectItemId(item.getLink());
                 twitter.post(item.getTitle(), String.valueOf(id));
+                currentTweets++;
+                if (currentTweets >= maxTweets) {
+                    break;
+                }
             }
         } catch (TwitterException | SQLException e) {
             LOG.error("Unexpected: ", e);

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Configurationのテスト.
@@ -72,5 +72,10 @@ public class ConfigurationTest {
     @Test
     public void testGetTwitterAccessTokenSecret() throws Exception {
         assertThat(conf.getTwitterAccessTokenSecret(), is("accesstokensecret"));
+    }
+
+    @Test
+    public void testGetMaxTweet() throws Exception {
+        assertThat(conf.getMaxTweets(), is(3));
     }
 }
