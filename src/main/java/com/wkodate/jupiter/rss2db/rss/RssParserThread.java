@@ -2,6 +2,7 @@ package com.wkodate.jupiter.rss2db.rss;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.io.FeedException;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +16,8 @@ import java.util.concurrent.Callable;
  * @author wkodate
  */
 public class RssParserThread implements Callable<List<Item>> {
+
+    private static final Logger LOG = Logger.getLogger(RssParserThread.class);
 
     private final int rssId;
     private final String rssUrl;
@@ -41,6 +44,7 @@ public class RssParserThread implements Callable<List<Item>> {
             }
         } catch (FeedException | IOException | InterruptedException e) {
             e.printStackTrace();
+            LOG.error("Unexpected error. rssId=" + rssId + ",rssUrl=" + rssUrl, e);
         }
         return items;
     }
