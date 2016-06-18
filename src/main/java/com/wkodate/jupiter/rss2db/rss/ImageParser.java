@@ -26,7 +26,7 @@ public class ImageParser {
 
     public static String parseFromContent(final String content) {
         Document document = Jsoup.parse(content, "UTF-8");
-        Elements links = document.select(".t_h img");
+        Elements links = document.select("img");
         if (links.size() > 0) {
             return links.get(0).attr("src");
         }

@@ -48,6 +48,7 @@ public class RssParser {
 
         // parse image
         String image = ImageParser.parseOrg(entry.getLink());
+        // og:imageが設定されていないときはコンテンツから取得
         if ("".equals(image) && entry.getContents().size() > 0) {
             String content = ((SyndContent) entry.getContents().get(0)).getValue();
             image = ImageParser.parseFromContent(content);
