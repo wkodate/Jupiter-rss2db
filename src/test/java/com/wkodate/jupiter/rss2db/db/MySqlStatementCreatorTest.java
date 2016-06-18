@@ -24,6 +24,7 @@ public class MySqlStatementCreatorTest {
     private final String DESC1 = "desc1";
     private final String IMAGE1 = "image1";
     private final Date DATE1;
+
     {
         // 2016/05/29 12:34:56
         Calendar cal1 = Calendar.getInstance();
@@ -35,6 +36,7 @@ public class MySqlStatementCreatorTest {
         cal1.set(Calendar.SECOND, 56);
         DATE1 = cal1.getTime();
     }
+
     private final int RSSID1 = 1;
 
     private final String TITLE2 = "title2";
@@ -42,6 +44,7 @@ public class MySqlStatementCreatorTest {
     private final String DESC2 = "desc2";
     private final String IMAGE2 = "image2";
     private final Date DATE2;
+
     {
         // 2016/05/27 23:45:01
         Calendar cal2 = Calendar.getInstance();
@@ -53,6 +56,7 @@ public class MySqlStatementCreatorTest {
         cal2.set(Calendar.SECOND, 1);
         DATE2 = cal2.getTime();
     }
+
     private final int RSSID2 = 2;
 
     private List<Item> items;
@@ -72,40 +76,9 @@ public class MySqlStatementCreatorTest {
         StringBuilder sb = new StringBuilder();
         sb.append("INSERT INTO ");
         sb.append(TEST_DB_NAME);
-        sb.append(".items(link, title, description, date, image, rss_id, created_at, updated_at) VALUES ('");
-        sb.append(LINK1);
-        sb.append("', '");
-        sb.append(TITLE1);
-        sb.append("', '");
-        sb.append(DESC1);
-        sb.append("', '");
-        sb.append("2016-05-29 12:34:56");
-        sb.append("', '");
-        sb.append(IMAGE1);
-        sb.append("', '");
-        sb.append(RSSID1);
-        sb.append("', '");
-        sb.append("2016-05-29 12:34:56");
-        sb.append("', '");
-        sb.append("2016-05-29 12:34:56");
-        sb.append("'),('");
-        sb.append(LINK2);
-        sb.append("', '");
-        sb.append(TITLE2);
-        sb.append("', '");
-        sb.append(DESC2);
-        sb.append("', '");
-        sb.append("2016-05-27 23:45:01");
-        sb.append("', '");
-        sb.append(IMAGE2);
-        sb.append("', '");
-        sb.append(RSSID2);
-        sb.append("', '");
-        sb.append("2016-05-27 23:45:01");
-        sb.append("', '");
-        sb.append("2016-05-27 23:45:01");
-        sb.append("');");
-        assertThat(creator.createStatementThatInsertIntoItemsTable(items),
+        sb.append(".items(link, title, description, date, image, rss_id, created_at, updated_at) VALUES ");
+        sb.append("(?, ?, ?, ?, ?, ?, ?, ?),(?, ?, ?, ?, ?, ?, ?, ?);");
+        assertThat(creator.createStatementThatInsertIntoItemsTable(items.size()),
                 is(sb.toString()));
     }
 
