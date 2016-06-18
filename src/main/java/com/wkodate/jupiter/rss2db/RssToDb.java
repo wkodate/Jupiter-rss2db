@@ -70,8 +70,9 @@ public class RssToDb {
                     new RssParserThread(rssId, rsses.get(rssId), fetchIntervalMs));
             futures.add(future);
         }
-        List<Item> newItems = new ArrayList<>();
+        int insertCount = 0;
         for (Future<List<Item>> future : futures) {
+            List<Item> newItems = new ArrayList<>();
             try {
                 List<Item> parsed = future.get();
                 for (Item item : parsed) {
@@ -81,18 +82,22 @@ public class RssToDb {
                     }
                     newItems.add(item);
                 }
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+                if (newItems.size() == 0) {
+                    continue;
+                }
+                client.insert(newItems);
+                insertCount += newItems.size();
+                // post tweets
+                postTweets(newItems);
+            } catch (InterruptedException | ExecutionException | SQLException e) {
+                LOG.error("Unexpected error. please check rssid=" + newItems.get(0).getRssId() + " ", e);
             }
         }
-        if (newItems.size() == 0) {
+        if (insertCount == 0) {
             LOG.info("No items are updated.");
             return;
         }
-        client.insert(newItems);
-        LOG.info(newItems.size() + " items are updated.");
-        // post tweets
-        postTweets(newItems);
+        LOG.info(insertCount + " items are updated.");
     }
 
     private Map<Integer, String> getRssIdUrlMap() {
@@ -143,7 +148,7 @@ public class RssToDb {
             rssToDb.process();
             rssToDb.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error("Unexpected: ", e);
         }
     }
 
