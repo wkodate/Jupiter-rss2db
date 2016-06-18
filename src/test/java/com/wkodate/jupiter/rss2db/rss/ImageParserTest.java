@@ -19,14 +19,17 @@ public class ImageParserTest {
 
     private static final String RDF1 = "/imgParser1.rdf";
     private static final String RDF2 = "/imgParser2.rdf";
+    private static final String RDF3 = "/imgParser3.rdf";
 
     @Test
     public void testParseImageFromContent() throws Exception {
         final String expected1 = "http://livedoor.blogimg.jp/kamillejin-denabay/imgs/a/9/a9618bda-s.jpg";
         final String expected2 = "http://livedoor.blogimg.jp/baynewsflash/imgs/e/6/e6ff5d19.jpg";
+        final String expected3 = "http://livedoor.blogimg.jp/kamonegi21/imgs/4/d/4dbe9297.jpg";
 
         assertThat(ImageParser.parseFromContent(getContent(RDF1)), is(expected1));
         assertThat(ImageParser.parseFromContent(getContent(RDF2)), is(expected2));
+        assertThat(ImageParser.parseFromContent(getContent(RDF3)), is(expected3));
     }
 
     private String getContent(final String rdf) throws Exception {
