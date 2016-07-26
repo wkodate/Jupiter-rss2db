@@ -29,6 +29,8 @@ public class RssToDb {
 
     private final TwitterBot twitter;
 
+    private final boolean permitTweet;
+
     private final long fetchIntervalMs;
 
     private final int maxTweets;
@@ -44,6 +46,7 @@ public class RssToDb {
                 conf.getDbUser(),
                 conf.getDbPassword()
         ).build();
+        this.permitTweet = conf.getPermiteTweet();
         this.twitter = new TwitterBot(
                 conf.getTwitterConsumerKey(),
                 conf.getTwitterConsumerSecret(),
@@ -57,6 +60,9 @@ public class RssToDb {
     public final void init() throws SQLException {
         es = Executors.newCachedThreadPool();
         client.init();
+        if (permitTweet) {
+            twitter.init();
+        }
     }
 
     public final void process() throws SQLException {
@@ -88,7 +94,9 @@ public class RssToDb {
                 client.insert(newItems);
                 insertCount += newItems.size();
                 // post tweets
-                postTweets(newItems);
+                if (permitTweet) {
+                    postTweets(newItems);
+                }
             } catch (InterruptedException | ExecutionException | SQLException e) {
                 LOG.error("Unexpected error. please check rssid=" + newItems.get(0).getRssId() + " ", e);
             }

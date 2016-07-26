@@ -15,6 +15,7 @@ public class Configuration {
     private static final String DBUSER_KEY = "dbuser";
     private static final String DBPASSWORD_KEY = "dbpassword";
     private static final String FETCH_INTERVAL_MS_KEY = "fetch_interval_ms";
+    private static final String PERMIT_TWEET_KEY = "permit_tweet";
     private static final String TWITTER_CONSUMER_KEY_KEY = "twitter_consumer_key";
     private static final String TWITTER_CONSUMER_SECRET_KEY = "twitter_consumer_secret";
     private static final String TWITTER_ACCESS_TOKEN_KEY = "twitter_access_token";
@@ -53,6 +54,10 @@ public class Configuration {
 
     public final long getFetchIntervalMs() {
         return Long.parseLong(prop.getProperty(FETCH_INTERVAL_MS_KEY));
+    }
+
+    public final boolean getPermiteTweet() {
+        return Boolean.parseBoolean(prop.getProperty(PERMIT_TWEET_KEY));
     }
 
     public final String getTwitterConsumerKey() {

@@ -53,6 +53,10 @@ public class ConfigurationTest {
         assertThat(conf.getFetchIntervalMs(), is(1000L));
     }
 
+    @Test
+    public void testPermitTweet() throws Exception {
+        assertThat(conf.getPermiteTweet(), is(false));
+    }
 
     @Test
     public void testGetTwitterConsumerKey() throws Exception {
