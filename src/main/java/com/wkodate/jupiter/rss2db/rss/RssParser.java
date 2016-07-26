@@ -54,10 +54,16 @@ public class RssParser {
             image = ImageParser.parseFromContent(content);
         }
 
+        // description
+        String description = entry.getDescription().getValue();
+        if (description.isEmpty() && entry.getContents().size() > 0) {
+            description = ((SyndContent) entry.getContents().get(0)).getValue();
+        }
+
         return new Item(
                 entry.getTitle(),
                 entry.getLink(),
-                entry.getDescription().getValue(),
+                description,
                 date,
                 image,
                 id,
