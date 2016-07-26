@@ -17,7 +17,12 @@ public class TwitterBot {
 
     private static final String HASH_TAG = "#なんJまとめのまとめ";
 
-    private final Twitter twitter;
+    private Twitter twitter;
+
+    private final String consKey;
+    private final String consSecret;
+    private final String token;
+    private final String tokenSecret;
 
     public TwitterBot(
             final String consKey,
@@ -25,6 +30,13 @@ public class TwitterBot {
             final String token,
             final String tokenSecret
     ) {
+        this.consKey = consKey;
+        this.consSecret = consSecret;
+        this.token = token;
+        this.tokenSecret = tokenSecret;
+    }
+
+    public void init() {
         twitter = new TwitterFactory().getInstance();
         twitter.setOAuthConsumer(consKey, consSecret);
         AccessToken accessToken = new AccessToken(token, tokenSecret);
